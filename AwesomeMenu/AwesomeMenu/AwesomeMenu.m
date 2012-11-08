@@ -64,10 +64,8 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
         self.menusArray = aMenusArray;
         
         // add the "Add" Button.
-        _addButton = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageNamed:@"bg-addbutton.png"]
-                                       highlightedImage:[UIImage imageNamed:@"bg-addbutton-highlighted.png"] 
-                                           ContentImage:[UIImage imageNamed:@"icon-plus.png"] 
-                                highlightedContentImage:[UIImage imageNamed:@"icon-plus-highlighted.png"]];
+        _addButton = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"]
+                                           highlightedImage:[UIImage imageNamed:@"menu_active"]];
         _addButton.delegate = self;
         _addButton.center = self.startPoint;
         [self addSubview:_addButton];
@@ -157,6 +155,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 {
     if (item == _addButton) 
     {
+        [self.superview bringSubviewToFront:self];
         self.expanding = !self.isExpanding;
     }
 }
@@ -187,10 +186,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     _expanding = NO;
     
     // rotate "add" button
-    float angle = self.isExpanding ? -M_PI_4 : 0.0f;
-    [UIView animateWithDuration:0.2f animations:^{
-        _addButton.transform = CGAffineTransformMakeRotation(angle);
-    }];
+//    float angle = self.isExpanding ? -M_PI_4 : 0.0f;
+//    [UIView animateWithDuration:0.2f animations:^{
+//        _addButton.transform = CGAffineTransformMakeRotation(angle);
+//    }];
+    // change image
+    NSString *image = self.isExpanding ? @"menu_icon_selected" : @"menu_icon";
+    _addButton.image = [UIImage imageNamed:image];
     
     if ([_delegate respondsToSelector:@selector(AwesomeMenu:didSelectIndex:)])
     {
@@ -252,10 +254,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     _expanding = expanding;    
     
     // rotate add button
-    float angle = self.isExpanding ? -M_PI_4 : 0.0f;
-    [UIView animateWithDuration:0.2f animations:^{
-        _addButton.transform = CGAffineTransformMakeRotation(angle);
-    }];
+//    float angle = self.isExpanding ? -M_PI_4 : 0.0f;
+//    [UIView animateWithDuration:0.2f animations:^{
+//        _addButton.transform = CGAffineTransformMakeRotation(angle);
+//    }];
+    // change image
+    NSString *image = self.isExpanding ? @"menu_icon_selected" : @"menu_icon";
+    _addButton.image = [UIImage imageNamed:image];
     
     // expand or close animation
     if (!_timer) 
