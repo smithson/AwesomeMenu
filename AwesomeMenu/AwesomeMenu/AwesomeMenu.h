@@ -12,7 +12,7 @@
 @protocol AwesomeMenuDelegate;
 
 
-@interface AwesomeMenu : UIView <AwesomeMenuItemDelegate>
+@interface AwesomeMenu : UIView <AwesomeMenuItemDelegate,STButtonsDelegate>
 {
     NSArray *_menusArray;
     int _flag;

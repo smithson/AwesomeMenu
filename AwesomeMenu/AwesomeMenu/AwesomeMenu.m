@@ -155,7 +155,6 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 {
     if (item == _addButton) 
     {
-        [self.superview bringSubviewToFront:self];
         self.expanding = !self.isExpanding;
     }
 }
@@ -398,6 +397,45 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     animationgroup.fillMode = kCAFillModeForwards;
     
     return animationgroup;
+}
+
+#pragma Show/Hide
+-(void)slideIn;
+{
+    [self slide:NO remove:NO];
+}
+-(void)slideOut;
+{
+    [self slide:YES remove:NO];
+}
+-(void)slideOutAndRemove:(BOOL)remove;
+{
+    return;
+    [self slide:YES remove:YES];
+}
+-(void)slide:(BOOL)slideOut remove:(BOOL)remove;
+{
+    int buttonTag = [self menu];
+    float percent = buttonTag/100.0f;
+    percent*=8.0f;
+    float duration = 1.0f;
+    //    if (slideOut) {
+    duration/=2;
+    //    }
+    [UIView animateWithDuration:duration animations:^{
+        [UIView setAnimationDelay:percent];
+        if (slideOut)
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        else
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        if (slideOut)
+            [self setFrame:CGRectMake([self width], self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
+        else
+            [self setFrame:CGRectMake(0, self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
+    } completion:^(BOOL finished) {
+        if (remove)[self removeFromSuperview];
+    }];
+    
 }
 
 

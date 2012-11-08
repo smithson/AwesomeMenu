@@ -36,6 +36,15 @@ highlightedContentImage:(UIImage *)hcimg;
     return self;
 }
 
+-(id)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage;
+{
+    self=[super initWithImage:image highlightedImage:highlightedImage];
+    if (self) {
+        self.userInteractionEnabled = YES;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [_contentImageView release];
